@@ -124,8 +124,6 @@ pub fn build(b: *std.Build) !void {
             const gobject_targz = create_gobject_targz.captureStdOut(.{
                 .basename = name,
             });
-            // const wf = b.addWriteFiles();
-            // const gobject_targz = wf.addCopyFile(stdout, name);
             const install_gobject_targz = b.addInstallFile(gobject_targz, name);
             b.getInstallStep().dependOn(&install_gobject_targz.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gobject_targz });
@@ -139,8 +137,6 @@ pub fn build(b: *std.Build) !void {
             const gobject_tarzstd = create_gobject_tarzstd.captureStdOut(.{
                 .basename = name,
             });
-            // const wf = b.addWriteFiles();
-            // const gobject_tarzstd = wf.addCopyFile(stdout, name);
             const install_gobject_tarzstd = b.addInstallFile(gobject_tarzstd, name);
             b.getInstallStep().dependOn(&install_gobject_tarzstd.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gobject_tarzstd });
