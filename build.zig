@@ -3,8 +3,12 @@ const builtin = @import("builtin");
 const app_version = @import("build.zig.zon").version;
 
 pub fn build(b: *std.Build) !void {
-    const minisign_key_ = std.posix.getenv("MINISIGN_KEY");
-    const minisign_password_ = std.posix.getenv("MINISIGN_PASSWORD");
+    const io = b.graph.io;
+    const cwd: std.Io.Dir = .cwd();
+
+    const minisign_key_ = b.graph.environ_map.get("MINISIGN_KEY");
+    const minisign_password_ = b.graph.environ_map.get("MINISIGN_PASSWORD");
+
     const date = b.option([]const u8, "date", "date") orelse "1970-01-01";
     const run_number = b.option([]const u8, "run-number", "run-rumber") orelse "0";
     const run_attempt = b.option([]const u8, "run-attempt", "run-attempt") orelse "0";
@@ -24,9 +28,9 @@ pub fn build(b: *std.Build) !void {
     translate_gir_run.addPrefixedDirectoryArg("--gir-fixes-dir=", b.path("gir-fixes"));
     {
         const gir_fixes_path = b.pathFromRoot("gir-fixes");
-        var gir_fixes_dir = std.fs.openDirAbsolute(gir_fixes_path, .{ .iterate = true }) catch unreachable;
+        var gir_fixes_dir = std.Io.Dir.openDirAbsolute(io, gir_fixes_path, .{ .iterate = true }) catch unreachable;
         var it = gir_fixes_dir.iterate();
-        while (it.next() catch unreachable) |entry| {
+        while (it.next(io) catch unreachable) |entry| {
             switch (entry.kind) {
                 .file => {
                     if (std.mem.eql(u8, std.fs.path.extension(entry.name), ".xslt"))
@@ -43,13 +47,13 @@ pub fn build(b: *std.Build) !void {
 
     const gir_files = b.addWriteFiles();
 
-    if (std.posix.getenv("GIR_PATH")) |gir_paths| {
+    if (b.graph.environ_map.get("GIR_PATH")) |gir_paths| {
         var gir_path_iterator = std.mem.splitScalar(u8, gir_paths, ':');
         while (gir_path_iterator.next()) |gir_path| {
-            var gir_dir = try std.fs.cwd().openDir(gir_path, .{ .iterate = true });
-            defer gir_dir.close();
+            var gir_dir = try cwd.openDir(io, gir_path, .{ .iterate = true });
+            defer gir_dir.close(io);
             var gir_dir_iterator = gir_dir.iterate();
-            while (try gir_dir_iterator.next()) |entry| {
+            while (try gir_dir_iterator.next(io)) |entry| {
                 const ext = std.fs.path.extension(entry.name);
 
                 if (!std.mem.eql(u8, ext, ".gir")) continue;
@@ -117,9 +121,11 @@ pub fn build(b: *std.Build) !void {
             const name = b.fmt("ghostty-gobject-{s}.tar.gz", .{version});
             const create_gobject_targz = b.addSystemCommand(&.{ "gzip", "-c" });
             create_gobject_targz.addFileArg(gobject_tar);
-            const stdout = create_gobject_targz.captureStdOut();
-            const wf = b.addWriteFiles();
-            const gobject_targz = wf.addCopyFile(stdout, name);
+            const gobject_targz = create_gobject_targz.captureStdOut(.{
+                .basename = name,
+            });
+            // const wf = b.addWriteFiles();
+            // const gobject_targz = wf.addCopyFile(stdout, name);
             const install_gobject_targz = b.addInstallFile(gobject_targz, name);
             b.getInstallStep().dependOn(&install_gobject_targz.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gobject_targz });
@@ -130,9 +136,11 @@ pub fn build(b: *std.Build) !void {
             const name = b.fmt("ghostty-gobject-{s}.tar.zst", .{version});
             const create_gobject_tarzstd = b.addSystemCommand(&.{ "zstd", "-c" });
             create_gobject_tarzstd.addFileArg(gobject_tar);
-            const stdout = create_gobject_tarzstd.captureStdOut();
-            const wf = b.addWriteFiles();
-            const gobject_tarzstd = wf.addCopyFile(stdout, name);
+            const gobject_tarzstd = create_gobject_tarzstd.captureStdOut(.{
+                .basename = name,
+            });
+            // const wf = b.addWriteFiles();
+            // const gobject_tarzstd = wf.addCopyFile(stdout, name);
             const install_gobject_tarzstd = b.addInstallFile(gobject_tarzstd, name);
             b.getInstallStep().dependOn(&install_gobject_tarzstd.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gobject_tarzstd });
@@ -170,9 +178,11 @@ pub fn build(b: *std.Build) !void {
             const name = b.fmt("ghostty-gir-{s}.tar.gz", .{version});
             const create_gir_targz = b.addSystemCommand(&.{ "gzip", "-c" });
             create_gir_targz.addFileArg(gir_tar);
-            const stdout = create_gir_targz.captureStdOut();
-            const wf = b.addWriteFiles();
-            const gir_targz = wf.addCopyFile(stdout, name);
+            const gir_targz = create_gir_targz.captureStdOut(.{
+                .basename = name,
+            });
+            // const wf = b.addWriteFiles();
+            // const gir_targz = wf.addCopyFile(stdout, name);
             const install_gir_targz = b.addInstallFile(gir_targz, name);
             b.getInstallStep().dependOn(&install_gir_targz.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gir_targz });
@@ -183,9 +193,11 @@ pub fn build(b: *std.Build) !void {
             const name = b.fmt("ghostty-gir-{s}.tar.zst", .{version});
             const create_gir_tarzstd = b.addSystemCommand(&.{ "zstd", "-c" });
             create_gir_tarzstd.addFileArg(gir_tar);
-            const stdout = create_gir_tarzstd.captureStdOut();
-            const wf = b.addWriteFiles();
-            const gir_tarzstd = wf.addCopyFile(stdout, name);
+            const gir_tarzstd = create_gir_tarzstd.captureStdOut(.{
+                .basename = name,
+            });
+            // const wf = b.addWriteFiles();
+            // const gir_tarzstd = wf.addCopyFile(stdout, name);
             const install_gir_tarzstd = b.addInstallFile(gir_tarzstd, name);
             b.getInstallStep().dependOn(&install_gir_tarzstd.step);
             try files_to_sign.append(b.allocator, .{ .name = name, .lp = gir_tarzstd });

@@ -3,11 +3,14 @@
 
   inputs = {
     nixpkgs = {
-      # url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-      url = "github:NixOS/nixpkgs/staging-next";
+      url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     };
     zon2nix = {
-      url = "github:jcollie/zon2nix?ref=728e15a05e8f48765a64f74d5720ec0a2567fe95";
+      url = "github:jcollie/zon2nix?ref=0.16";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zig = {
+      url = "github:mitchellh/zig-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -15,20 +18,17 @@
   outputs = {
     nixpkgs,
     zon2nix,
+    zig,
     ...
   }: let
+    platforms = nixpkgs.lib.attrNames zig.packages;
     makePackages = system:
       import nixpkgs {
         inherit system;
       };
     forAllSystems = (
       function:
-        nixpkgs.lib.genAttrs [
-          "aarch64-linux"
-          "aarch64-darwin"
-          "x86_64-linux"
-          "x86_64-darwin"
-        ] (system: function (makePackages system))
+        nixpkgs.lib.genAttrs platforms (system: function (makePackages system))
     );
   in {
     devShells = forAllSystems (pkgs: {
@@ -59,11 +59,12 @@
               pkgs.libxml2
               pkgs.libxslt
               pkgs.minisign
-              pkgs.nixfmt-rfc-style
+              pkgs.nixfmt
+              pkgs.nix-prefetch-git
               pkgs.pinact
               pkgs.pkg-config
-              pkgs.zig_0_15
-              zon2nix.packages.${pkgs.system}.zon2nix
+              zig.packages.${pkgs.stdenv.hostPlatform.system}.master
+              zon2nix.packages.${pkgs.stdenv.hostPlatform.system}.zon2nix
             ]
             ++ gir_path;
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath gir_path;

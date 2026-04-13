@@ -1,5 +1,5 @@
 /result*
 /zig-out
+/zig-pkg
 /.zig-cache
 /build.zig.zon2json-lock
-
