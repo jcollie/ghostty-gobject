@@ -9,8 +9,8 @@
 
     .dependencies = .{
         .gobject_codegen = .{
-            .url = "git+https://github.com/jcollie/zig-gobject#7936495f3e9e8d4ffaf5f7be1f357aec59cfad9b",
-            .hash = "gobject_codegen-0.3.1-B33qzQx_BwB9xwM-YwaRujOH8nb0088zeNfjwOTVFodm",
+            .url = "git+https://github.com/jcollie/zig-gobject#c59c96a61318a246acb80af60637e48dd96841fb",
+            .hash = "gobject_codegen-0.3.1-B33qzdB-BwCJT3fq5N2TIeoLDjTCymXQfKR_aCZQhOej",
         },
     },
 

@@ -6,7 +6,7 @@
       url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     };
     zon2nix = {
-      url = "github:jcollie/zon2nix?ref=0.16";
+      url = "github:jcollie/zon2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zig = {
@@ -63,7 +63,7 @@
               pkgs.nix-prefetch-git
               pkgs.pinact
               pkgs.pkg-config
-              zig.packages.${pkgs.stdenv.hostPlatform.system}.master
+              zig.packages.${pkgs.stdenv.hostPlatform.system}."0.16.0"
               zon2nix.packages.${pkgs.stdenv.hostPlatform.system}.zon2nix
             ]
             ++ gir_path;
