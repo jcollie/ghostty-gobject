@@ -18,7 +18,16 @@ pub fn build(b: *std.Build) !void {
     const date = b.option([]const u8, "date", "date") orelse "1970-01-01";
     const run_number = b.option([]const u8, "run-number", "run-rumber") orelse "0";
     const run_attempt = b.option([]const u8, "run-attempt", "run-attempt") orelse "0";
-    const version = b.fmt("{s}-{s}-{s}-{s}", .{ app_version, date, run_number, run_attempt });
+    // The Zig that runs this build is the one that builds translate-gir, so
+    // name it in the release. The build metadata of a nightly (the `+commit`
+    // suffix) is left out: GitHub URL-encodes a `+` in asset URLs, and the
+    // `-dev.N` before it already identifies the nightly.
+    const zig_version = builtin.zig_version;
+    const zig_version_string = if (zig_version.pre) |pre|
+        b.fmt("{d}.{d}.{d}-{s}", .{ zig_version.major, zig_version.minor, zig_version.patch, pre })
+    else
+        b.fmt("{d}.{d}.{d}", .{ zig_version.major, zig_version.minor, zig_version.patch });
+    const version = b.fmt("{s}-zig-{s}-{s}-{s}-{s}", .{ app_version, zig_version_string, date, run_number, run_attempt });
 
     const gobject_codegen_dep = b.dependency(
         "gobject_codegen",
