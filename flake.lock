@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1785090369,
-        "narHash": "sha256-JmPsbx37jA7Qga36iij0jsbwV4PVRACnqoVroAt/cAc=",
-        "rev": "624af665418d3c65d544145b4d34ad696439570e",
+        "lastModified": 1790822859,
+        "narHash": "sha256-VBA0QerzzmL+4wxgtwiCdiLwLpJg2/9xOxhgO3BRJQA=",
+        "rev": "c59305bab2065cfecc4944690d9eedbb56f3a9fa",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1042126.624af665418d/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1083223.c59305bab206/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
@@ -30,11 +30,33 @@
         ]
       },
       "locked": {
-        "lastModified": 1790900135,
-        "narHash": "sha256-VLunNpijoD62IiEXe5R+pe/j3qQdupnF4jkreCqhhpw=",
+        "lastModified": 1790977620,
+        "narHash": "sha256-KIjNPrmY4M68v9N86VDsNY6UFiM+Mon4S+Cf1RHYiEg=",
         "ref": "refs/heads/main",
-        "rev": "3c7b4ca79564da4179d17f8263b29dc1674fad6b",
-        "revCount": 1731,
+        "rev": "464e4de22498681ae374949df04c7a6f5f001519",
+        "revCount": 1733,
+        "type": "git",
+        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
+      }
+    },
+    "zig_2": {
+      "inputs": {
+        "nixpkgs": [
+          "zon2nix",
+          "nixpkgs"
+        ],
+        "zon2nix": "zon2nix_2"
+      },
+      "locked": {
+        "lastModified": 1790813729,
+        "narHash": "sha256-I07YIR9HdkZo8H/kJHvU6h/mS3r9e3YJQiaC7UV3wCs=",
+        "ref": "refs/heads/main",
+        "rev": "b680b99ed546f8245a34be43dd7fc6b743f97863",
+        "revCount": 1729,
         "type": "git",
         "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
       },
@@ -48,9 +70,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "zig": [
-          "zig"
-        ]
+        "zig": "zig_2"
       },
       "locked": {
         "lastModified": 1790822810,
@@ -63,6 +83,29 @@
       "original": {
         "owner": "jcollie",
         "ref": "zig-0.17",
+        "repo": "zon2nix",
+        "type": "github"
+      }
+    },
+    "zon2nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "zon2nix",
+          "zig",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790583033,
+        "narHash": "sha256-Eo3hR521Yc2Gsqw7m/aqd5sn3/qi0XoSpJBIPPIYKkg=",
+        "owner": "jcollie",
+        "repo": "zon2nix",
+        "rev": "8e91c0d44aa49d0ac415f7e3046662e9aa754335",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jcollie",
+        "ref": "v0.9.0",
         "repo": "zon2nix",
         "type": "github"
       }
