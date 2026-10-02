@@ -6,10 +6,11 @@
       url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     };
     zon2nix = {
-      url = "github:jcollie/zon2nix/zig-0.17";
-      # Not following our zig: this branch of zon2nix builds with the 0.17
-      # nightly pinned in its own lock, and does not compile with 0.17.0.
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:jcollie/zon2nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        zig.follows = "zig";
+      };
     };
     # nixpkgs has no zig_0_17 yet, so Zig 0.17.0 comes from the overlay.
     zig = {

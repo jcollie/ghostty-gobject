@@ -43,69 +43,25 @@
         "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
       }
     },
-    "zig_2": {
-      "inputs": {
-        "nixpkgs": [
-          "zon2nix",
-          "nixpkgs"
-        ],
-        "zon2nix": "zon2nix_2"
-      },
-      "locked": {
-        "lastModified": 1790813729,
-        "narHash": "sha256-I07YIR9HdkZo8H/kJHvU6h/mS3r9e3YJQiaC7UV3wCs=",
-        "ref": "refs/heads/main",
-        "rev": "b680b99ed546f8245a34be43dd7fc6b743f97863",
-        "revCount": 1729,
-        "type": "git",
-        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
-      }
-    },
     "zon2nix": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ],
-        "zig": "zig_2"
-      },
-      "locked": {
-        "lastModified": 1790822810,
-        "narHash": "sha256-CDoZtOqVOtUHpqVdu8OBqely8X5r4ZtMNoUHiTzRFL4=",
-        "owner": "jcollie",
-        "repo": "zon2nix",
-        "rev": "6c54bcaf44fd1f0c7517953c2f4e442ad042661f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jcollie",
-        "ref": "zig-0.17",
-        "repo": "zon2nix",
-        "type": "github"
-      }
-    },
-    "zon2nix_2": {
-      "inputs": {
-        "nixpkgs": [
-          "zon2nix",
-          "zig",
-          "nixpkgs"
+        "zig": [
+          "zig"
         ]
       },
       "locked": {
-        "lastModified": 1790583033,
-        "narHash": "sha256-Eo3hR521Yc2Gsqw7m/aqd5sn3/qi0XoSpJBIPPIYKkg=",
+        "lastModified": 1790979289,
+        "narHash": "sha256-nePGmEQfVNY/6uesDvbXxYSYduT1xAYIPQA177yHt7M=",
         "owner": "jcollie",
         "repo": "zon2nix",
-        "rev": "8e91c0d44aa49d0ac415f7e3046662e9aa754335",
+        "rev": "2a4c0b00607505c99792f04f347dbd00e15a5ab6",
         "type": "github"
       },
       "original": {
         "owner": "jcollie",
-        "ref": "v0.9.0",
         "repo": "zon2nix",
         "type": "github"
       }
