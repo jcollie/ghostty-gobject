@@ -6,6 +6,12 @@ pub fn build(b: *std.Build) !void {
     const io = b.graph.io;
     const cwd: std.Io.Dir = .cwd();
 
+    // The configuration below reads the environment (GIR_PATH and the
+    // minisign secrets), which Zig's configure cache does not key on, and
+    // lists the directories that GIR_PATH names. Without this a change to
+    // either would be answered with a stale cached configuration.
+    b.graph.poisonCache();
+
     const minisign_key_ = b.graph.environ_map.get("MINISIGN_KEY");
     const minisign_password_ = b.graph.environ_map.get("MINISIGN_PASSWORD");
 
@@ -26,8 +32,8 @@ pub fn build(b: *std.Build) !void {
     const bindings = translate_gir_run.addPrefixedOutputDirectoryArg("--output-dir=", "bindings");
 
     gir_fixes: {
-        const gir_fixes_path = b.pathFromRoot("gir-fixes");
-        var gir_fixes_dir = std.Io.Dir.openDirAbsolute(io, gir_fixes_path, .{ .iterate = true }) catch break :gir_fixes;
+        var gir_fixes_dir = b.root.openDir(io, "gir-fixes", .{ .iterate = true }) catch break :gir_fixes;
+        defer gir_fixes_dir.close(io);
         translate_gir_run.addPrefixedDirectoryArg("--gir-fixes-dir=", b.path("gir-fixes"));
         var it = gir_fixes_dir.iterate();
         while (it.next(io) catch unreachable) |entry| {

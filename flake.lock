@@ -16,7 +16,31 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
+        "zig": "zig",
         "zon2nix": "zon2nix"
+      }
+    },
+    "zig": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "zon2nix": [
+          "zon2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790900135,
+        "narHash": "sha256-VLunNpijoD62IiEXe5R+pe/j3qQdupnF4jkreCqhhpw=",
+        "ref": "refs/heads/main",
+        "rev": "3c7b4ca79564da4179d17f8263b29dc1674fad6b",
+        "revCount": 1731,
+        "type": "git",
+        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.jcollie.dev/jeff/zig-overlay.git"
       }
     },
     "zon2nix": {

@@ -2,12 +2,12 @@
     .name = .ghostty_gobject,
     .version = "0.10.0",
     .fingerprint = 0xfd1e6c3df1b84d9d,
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0-dev.2384+ac77c23af",
 
     .dependencies = .{
         .gobject_codegen = .{
-            .url = "git+https://github.com/jcollie/zig-gobject#4ff7b4d030465b50796b90af72fec41eb9b3b5c6",
-            .hash = "gobject_codegen-0.3.2-B33qzUZkBwClXYYiisnB18xbuUvR8B2Z9C28-bnLxbnA",
+            .url = "git+https://github.com/jcollie/zig-gobject#e322a4e6cc369267f9b429e9da68eb63a632aea3",
+            .hash = "gobject_codegen-0.3.2-B33qzcdpBwAM-U3jz-pxF1C7GTSIriS6EsAlyW_lXW7z",
         },
     },
 

@@ -9,11 +9,21 @@
       url = "github:jcollie/zon2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Zig 0.17 is not released, so the toolchain is the overlay's newest
+    # nightly. flake.lock pins which one; `nix flake update zig` moves it.
+    zig = {
+      url = "git+https://git.jcollie.dev/jeff/zig-overlay.git";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        zon2nix.follows = "zon2nix";
+      };
+    };
   };
 
   outputs = {
     nixpkgs,
     zon2nix,
+    zig,
     ...
   }: let
     platforms = [
@@ -62,7 +72,7 @@
               pkgs.nix-prefetch-git
               pkgs.pinact
               pkgs.pkg-config
-              pkgs.zig_0_16
+              zig.packages.${pkgs.stdenv.hostPlatform.system}.master
               zon2nix.packages.${pkgs.stdenv.hostPlatform.system}.zon2nix
             ]
             ++ gir_path;
