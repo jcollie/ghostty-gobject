@@ -47,18 +47,22 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
+        ],
+        "zig": [
+          "zig"
         ]
       },
       "locked": {
-        "lastModified": 1784117571,
-        "narHash": "sha256-Hvnmnuu0VpHiZl+8z+UkMoxC7JZJvRYBqu2Asb0ZJOE=",
+        "lastModified": 1790822810,
+        "narHash": "sha256-CDoZtOqVOtUHpqVdu8OBqely8X5r4ZtMNoUHiTzRFL4=",
         "owner": "jcollie",
         "repo": "zon2nix",
-        "rev": "0ce628fb78309cdb13d098ae9c6fdbf87c75d25b",
+        "rev": "6c54bcaf44fd1f0c7517953c2f4e442ad042661f",
         "type": "github"
       },
       "original": {
         "owner": "jcollie",
+        "ref": "zig-0.17",
         "repo": "zon2nix",
         "type": "github"
       }

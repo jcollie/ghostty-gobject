@@ -6,8 +6,11 @@
       url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     };
     zon2nix = {
-      url = "github:jcollie/zon2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:jcollie/zon2nix/zig-0.17";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        zig.follows = "zig";
+      };
     };
     # Zig 0.17 is not released, so the toolchain is the overlay's newest
     # nightly. flake.lock pins which one; `nix flake update zig` moves it.
