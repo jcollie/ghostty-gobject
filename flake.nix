@@ -9,15 +9,6 @@
       url = "github:jcollie/zon2nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        zig.follows = "zig";
-      };
-    };
-    # nixpkgs has no zig_0_17 yet, so Zig 0.17.0 comes from the overlay.
-    zig = {
-      url = "git+https://git.jcollie.dev/jeff/zig-overlay.git";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        zon2nix.follows = "zon2nix";
       };
     };
   };
@@ -25,7 +16,6 @@
   outputs = {
     nixpkgs,
     zon2nix,
-    zig,
     ...
   }: let
     platforms = [
@@ -74,7 +64,7 @@
               pkgs.nix-prefetch-git
               pkgs.pinact
               pkgs.pkg-config
-              zig.packages.${pkgs.stdenv.hostPlatform.system}."0.17.0"
+              pkgs.zig_0_17
               zon2nix.packages.${pkgs.stdenv.hostPlatform.system}.zon2nix
             ]
             ++ gir_path;
